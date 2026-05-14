@@ -1,25 +1,21 @@
 @startuml
 
-abstract BaseReversiRules {
-    + isValidMove(board: Board, move: Position, player: Player): Boolean
-    + applyMove(board: Board, move: Position, player: Player): Board
-    + getValidMoves(board: Board, player: Player): List<Position>
-    + isGameOver(board: Board): Boolean
-    + getWinner(board: Board): Player
-}
-
-
 class OthelloRules {
-    + isGameOver(board: Board): Boolean
+    + createStartBoard(size: Int, positions: List<Pair<Position, Int>>): Board
+    + isGameOver(board: Board, player: Player): Boolean
 }
 
-class NxNRules {
-    + getBoardSize(): Int
-    + createStartBoard(): Board
+class NxNReversiRules {
+    + createStartBoard(size: Int = 8, positions: List<Pair<Position, Int>>): Board
+    + isValidMove(board: Board, move: Position, player: Player): Boolean
+    + tryAndApplyMove(board: Board, move: Position, player: Player): Boolean
+    + getValidMoves(board: Board, player: Player): List<Position>
+    + isGameOver(board: Board, player: Player): Boolean
+    + getWinner(board: Board): Int
 }
 
 class AntiReversiRules {
-    + getWinner(board: Board): Player
+    + getWinner(board: Board): Int
 }
 
 
@@ -27,20 +23,23 @@ class AntiReversiRules {
 class Game {
     - gameId: String
     - board: Board
-    - ruleset: BaseReversiRules
+    - ruleset: NxNReversiRules
     - players: List<Player>
-    - currentPlayerIndex: Int
-    - moveHistory: List<Move>
-    + makeMove(playerId: String, row: Int, col: Int): MoveResult
-    - switchPlayer()
+    - currentPlayer: Int
+    + addPlayer(player: Player)
+    + makeMove(move: Position): Boolean
+    + getCurrentPlayer(): Player
+    + switchPlayer()
+    + getBoard(): Board
 }
 
 class Board {
     - size: Int
     - cells: Array<Array<Cell>>
-    + getCell(pos: Position): Cell
-    + setCell(pos: Position, cell: Cell): Unit
-    + createSnapshot(): BoardSnapshot
+    + getSize()
+    + get(pos: Position): Cell
+    + set(pos: Position, cell: Cell)
+    + isFull(): Boolean
 }
 
 class Player {
@@ -49,7 +48,8 @@ class Player {
     - elo: Int
     - chipsCount: Int
     - color: ColorOfPlayer
-    + changeChipsCount(num: Int)
+    + getColor()
+    + getOppositeColor()
 }
 
 class Position {
@@ -60,8 +60,8 @@ class Position {
 
 enum Cell {
     EMPTY
-    PlayerOne
-    PlayerTwo
+    PLAYER_ONE
+    PLAYER_TWO
 }
 
 enum ColorOfPlayer {
@@ -71,18 +71,17 @@ enum ColorOfPlayer {
 
 
 
-BaseReversiRules <|-- OthelloRules
-BaseReversiRules <|-- NxNRules
-NxNRules <|-- AntiReversiRules
+NxNReversiRules <|-- OthelloRules
+NxNReversiRules <|-- AntiReversiRules
 
 Game *-- Board : contains
-Game *-- BaseReversiRules : contains
+Game *-- NxNReversiRules: contains
 Game *-- Player : contains
 
 Player --> ColorOfPlayer: has
-BaseReversiRules --> Board : reads/modifies
-BaseReversiRules --> Position : uses
-BaseReversiRules --> Player : uses
+NxNReversiRules --> Board : reads/modifies
+NxNReversiRules --> Position : uses
+NxNReversiRules --> Player : uses
 
 Board *-- Cell : contains
 @enduml
