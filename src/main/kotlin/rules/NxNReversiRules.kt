@@ -1,5 +1,11 @@
-open class BaseReversiRules {
-    open fun createStartBoard(size: Int, positions: List<Pair<Position, Int>>): Board {
+package rules
+
+import Board
+import Position
+import Player
+
+open class NxNReversiRules{
+    open fun createStartBoard(size: Int = 8, positions: List<Pair<Position, Int>>): Board {
         val board = Board(size)
         for (x in positions) {
             val pos = x.first
