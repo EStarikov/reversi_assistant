@@ -7,5 +7,4 @@ class Player(private val id: Int, private val name: String, private var elo: Int
         if (color == ColorOfPlayer.BLACK) return Cell.PLAYER_TWO
         return Cell.PLAYER_ONE
     }
-    fun getChipsCount(): Int {return chipsCount}
 }
