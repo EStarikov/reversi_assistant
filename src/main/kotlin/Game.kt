@@ -1,10 +1,14 @@
 class Game(private val ruleset: rules.NxNReversiRules, private val board: Board, private val gameID: Int) {
     private val players = ArrayList<Player>()
     private var currentPlayer = 0
+    private val moveHistory = ArrayList<String>()
     fun getCurrentPlayer(): Player {return players[currentPlayer]}
     fun makeMove(move: Position): Boolean {
         val flag = ruleset.tryAndApplyMove(board, move, players[currentPlayer])
-        if (flag) switchPlayer()
+        if (flag) {
+            switchPlayer()
+            moveHistory.add(PositionInHuman(move).makeHuman())
+        }
         return flag
     }
     fun switchPlayer() {
