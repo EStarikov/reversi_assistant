@@ -11,11 +11,11 @@ class SimpleGameIntegrationTest {
  @Test
     fun `4x4 base rules`() {
         rulesOfThisGame = rules.NxNReversiRules()
-        playerOne = Player(1, "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player(2, "Bob", 1200, 32, ColorOfPlayer.WHITE)
+        playerOne = Player("Alice", 1200, 32, ColorOfPlayer.BLACK)
+        playerTwo = Player("Bob", 1200, 32, ColorOfPlayer.WHITE)
         val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
         val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board, 2)
+        val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 
@@ -83,11 +83,11 @@ class SimpleGameIntegrationTest {
     @Test
     fun `4x4 anti rules`() {
         rulesOfThisGame = rules.AntiReversiRules()
-        playerOne = Player(1, "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player(2, "Bob", 1200, 32, ColorOfPlayer.WHITE)
+        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
+        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
         val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
         val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board, 2)
+        val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 
@@ -155,11 +155,11 @@ class SimpleGameIntegrationTest {
     @Test
     fun `othello rules`() {
         rulesOfThisGame = rules.OthelloRules()
-        playerOne = Player(1, "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player(2, "Bob", 1200, 32, ColorOfPlayer.WHITE)
+        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
+        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
         val startPosition = listOf(Pair(Position(0, 0), 1))
         val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board, 3)
+        val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 

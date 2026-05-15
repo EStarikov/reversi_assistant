@@ -1,4 +1,4 @@
-class Game(private val ruleset: rules.NxNReversiRules, private val board: Board, private val gameID: Int) {
+class Game(private val ruleset: rules.NxNReversiRules, private val board: Board) {
     private val players = ArrayList<Player>()
     private var currentPlayer = 0
     private val moveHistory = ArrayList<String>()
