@@ -79,7 +79,7 @@ open class NxNReversiRules{
         val moves = getValidMoves(board, player)
         return moves.isEmpty()
     }
-    open fun getWinner(board: Board): Int {
+    open fun getWinner(board: Board): Triple<Int, Int, Int> {
         var pl1 = 0
         var pl2 = 0
         for (i in 0 until board.getSize()) {
@@ -89,9 +89,9 @@ open class NxNReversiRules{
             }
         }
         return when {
-            pl1 > pl2 -> 0
-            pl2 > pl1 -> 1
-            else -> 2
+            pl1 > pl2 -> Triple(0, pl1, pl2)
+            pl2 > pl1 -> Triple(1, pl1, pl2)
+            else -> Triple(2, pl1, pl2)
         }
     }
 }

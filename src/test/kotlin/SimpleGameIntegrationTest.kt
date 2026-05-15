@@ -76,7 +76,8 @@ class SimpleGameIntegrationTest {
          rulesOfThisGame.tryAndApplyMove(cleanBoard, move9, playerOne)
 
         assertTrue(rulesOfThisGame.isGameOver(board, playerTwo))
-        assertEquals(0, rulesOfThisGame.getWinner(cleanBoard))
+        val winner = rulesOfThisGame.getWinner(cleanBoard)
+        assertEquals(0, winner.first)
     }
 
     @Test
@@ -147,7 +148,8 @@ class SimpleGameIntegrationTest {
         rulesOfThisGame.tryAndApplyMove(cleanBoard, move9, playerOne)
 
         assertTrue(rulesOfThisGame.isGameOver(board, playerTwo))
-        assertEquals(1, rulesOfThisGame.getWinner(cleanBoard))
+        val winner = rulesOfThisGame.getWinner(cleanBoard)
+        assertEquals(1, winner.first)
     }
 
     @Test
@@ -184,7 +186,8 @@ class SimpleGameIntegrationTest {
             cleanGame.makeMove(move)
         }
 
-        assertTrue(rulesOfThisGame.isGameOver(board, cleanGame.getCurrentPlayer()))
-        assertEquals(1, rulesOfThisGame.getWinner(cleanBoard))
+        assertTrue(cleanGame.isGameOver())
+        val winner = cleanGame.getWinner()
+        assertEquals(1, winner.first)
     }
 }

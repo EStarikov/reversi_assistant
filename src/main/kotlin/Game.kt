@@ -18,4 +18,10 @@ class Game(private val ruleset: rules.NxNReversiRules, private val board: Board,
         players.add(player)
     }
     fun getBoard(): Board {return board}
+    fun isGameOver(): Boolean {
+        return ruleset.isGameOver(board, getCurrentPlayer())
+    }
+    fun getWinner(): Triple<Int, Int, Int> {
+        return ruleset.getWinner(board)
+    }
 }
