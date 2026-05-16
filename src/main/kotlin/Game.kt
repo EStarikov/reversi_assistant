@@ -7,7 +7,7 @@ class Game(private val ruleset: rules.NxNReversiRules, private val board: Board)
         val flag = ruleset.tryAndApplyMove(board, move, players[currentPlayer])
         if (flag) {
             switchPlayer()
-            moveHistory.add(PositionInHuman(move).makeHuman())
+            moveHistory.add(PositionInHuman().makeHuman(move))
         }
         return flag
     }
@@ -21,7 +21,12 @@ class Game(private val ruleset: rules.NxNReversiRules, private val board: Board)
     fun isGameOver(): Boolean {
         return ruleset.isGameOver(board, getCurrentPlayer())
     }
-    fun getWinner(): Triple<Int, Int, Int> {
+    fun getWinner(): Triple<Int, Int, Int>? {
+        if (!isGameOver()) return null
         return ruleset.getWinner(board)
+    }
+    fun getPlayer(index: Int): Player {return players[index]}
+    fun getMoveHistory(): String {
+        return moveHistory.joinToString(" ")
     }
 }
