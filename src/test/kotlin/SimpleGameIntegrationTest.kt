@@ -11,9 +11,11 @@ class SimpleGameIntegrationTest {
  @Test
     fun `4x4 base rules`() {
         rulesOfThisGame = rules.NxNReversiRules()
-        playerOne = Player("Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player("Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
         val board = rulesOfThisGame.createStartBoard(4, startPosition)
         val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
@@ -83,9 +85,11 @@ class SimpleGameIntegrationTest {
     @Test
     fun `4x4 anti rules`() {
         rulesOfThisGame = rules.AntiReversiRules()
-        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
         val board = rulesOfThisGame.createStartBoard(4, startPosition)
         val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
@@ -155,10 +159,12 @@ class SimpleGameIntegrationTest {
     @Test
     fun `othello rules`() {
         rulesOfThisGame = rules.OthelloRules()
-        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1))
-        val board = rulesOfThisGame.createStartBoard(4, startPosition)
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1))
+        val board = rulesOfThisGame.createStartBoard(8, startPosition)
         val cleanGame = Game(rulesOfThisGame, board)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
@@ -188,6 +194,6 @@ class SimpleGameIntegrationTest {
 
         assertTrue(cleanGame.isGameOver())
         val winner = cleanGame.getWinner()
-        assertEquals(1, winner.first)
+        assertEquals(1, winner!!.first)
     }
 }
