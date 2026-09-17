@@ -1,6 +1,6 @@
 package rules
 
-import Board
+import board.Board
 
 class AntiReversiRules: NxNReversiRules() {
     override fun getWinner(board: Board): Triple<Int, Int, Int> {

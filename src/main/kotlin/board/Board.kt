@@ -1,3 +1,5 @@
+package board
+
 class Board(private var size: Int) {
     private var board = Array(size) { Array(size) { Cell.EMPTY } }
     fun getSize() = board.size

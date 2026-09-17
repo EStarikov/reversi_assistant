@@ -1,5 +1,9 @@
+import board.Cell
+import board.Position
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import player.ColorOfPlayer
+import player.Player
 
 
 class SimpleGameIntegrationTest {
@@ -11,11 +15,12 @@ class SimpleGameIntegrationTest {
  @Test
     fun `4x4 base rules`() {
         rulesOfThisGame = rules.NxNReversiRules()
-        playerOne = Player("Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player("Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
-        val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board)
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
+        val cleanGame = Game(rulesOfThisGame, 4, startPosition)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 
@@ -24,7 +29,7 @@ class SimpleGameIntegrationTest {
         // Ход 1: Alice ставит на (1, 3)
         val move1 = Position(0, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move1, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move1, playerOne)
+        cleanGame.makeMove(move1)
 
         // Проверяем, что фишка (1, 2) перевернулась
         assertEquals(Cell.PLAYER_ONE, cleanBoard.get(0, 1))
@@ -37,57 +42,58 @@ class SimpleGameIntegrationTest {
         //Ход 2: Bob ставит на (2, 3)
         val move2r = Position(1, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move2r, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move2r, playerTwo)
+     cleanGame.makeMove(move2r)
 
 
         // Ход 3: Alice ставит на (3, 3)
         val move3 = Position(2, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move3, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move3, playerOne)
+        cleanGame.makeMove(move3)
 
         //Ход 4: Bob ставит на (2, 4)
         val move4 = Position(1, 3)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move4, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move4, playerTwo)
+        cleanGame.makeMove(move4)
 
          // Ход 5: Alice ставит на (3, 1)
          val move5 = Position(2, 0)
          assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move5, playerOne))
-         rulesOfThisGame.tryAndApplyMove(cleanBoard, move5, playerOne)
+        cleanGame.makeMove(move5)
 
          //Ход 6: Bob ставит на (4, 2)
          val move6 = Position(3, 1)
          assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move6, playerTwo))
-         rulesOfThisGame.tryAndApplyMove(cleanBoard, move6, playerTwo)
+        cleanGame.makeMove(move6)
 
          // Ход 7: Alice ставит на (4, 4)
          val move7 = Position(3, 3)
          assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move7, playerOne))
-         rulesOfThisGame.tryAndApplyMove(cleanBoard, move7, playerOne)
+        cleanGame.makeMove(move7)
 
-         //Ход 6: Bob ставит на (4, 3)
+         //Ход 8: Bob ставит на (4, 3)
          val move8 = Position(3, 2)
          assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move8, playerTwo))
-         rulesOfThisGame.tryAndApplyMove(cleanBoard, move8, playerTwo)
+        cleanGame.makeMove(move8)
 
          // Ход 9: Alice ставит на (4, 1)
          val move9 = Position(3, 0)
          assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move9, playerOne))
-         rulesOfThisGame.tryAndApplyMove(cleanBoard, move9, playerOne)
+        cleanGame.makeMove(move9)
 
-        assertTrue(rulesOfThisGame.isGameOver(board, playerTwo))
-        val winner = rulesOfThisGame.getWinner(cleanBoard)
-        assertEquals(0, winner.first)
+        assertTrue(cleanGame.isGameOver())
+        val winner = cleanGame.getWinner()
+        assertEquals(0, winner!!.first)
     }
 
     @Test
     fun `4x4 anti rules`() {
         rulesOfThisGame = rules.AntiReversiRules()
-        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
-        val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board)
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1), Pair(Position(1,1), 1), Pair(Position(0,1), 2), Pair(Position(1,0), 2))
+        val cleanGame = Game(rulesOfThisGame, 4, startPosition)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 
@@ -96,7 +102,7 @@ class SimpleGameIntegrationTest {
         // Ход 1: Alice ставит на (1, 3)
         val move1 = Position(0, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move1, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move1, playerOne)
+        cleanGame.makeMove(move1)
 
         // Проверяем, что фишка (1, 2) перевернулась
         assertEquals(Cell.PLAYER_ONE, cleanBoard.get(0, 1))
@@ -109,57 +115,58 @@ class SimpleGameIntegrationTest {
         //Ход 2: Bob ставит на (2, 3)
         val move2r = Position(1, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move2r, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move2r, playerTwo)
+        cleanGame.makeMove(move2r)
 
 
         // Ход 3: Alice ставит на (3, 3)
         val move3 = Position(2, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move3, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move3, playerOne)
+        cleanGame.makeMove(move3)
 
         //Ход 4: Bob ставит на (2, 4)
         val move4 = Position(1, 3)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move4, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move4, playerTwo)
+        cleanGame.makeMove(move4)
 
         // Ход 5: Alice ставит на (3, 1)
         val move5 = Position(2, 0)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move5, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move5, playerOne)
+        cleanGame.makeMove(move5)
 
         //Ход 6: Bob ставит на (4, 2)
         val move6 = Position(3, 1)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move6, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move6, playerTwo)
+        cleanGame.makeMove(move6)
 
         // Ход 7: Alice ставит на (4, 4)
         val move7 = Position(3, 3)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move7, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move7, playerOne)
+        cleanGame.makeMove(move7)
 
-        //Ход 6: Bob ставит на (4, 3)
+        //Ход 8: Bob ставит на (4, 3)
         val move8 = Position(3, 2)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move8, playerTwo))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move8, playerTwo)
+        cleanGame.makeMove(move8)
 
         // Ход 9: Alice ставит на (4, 1)
         val move9 = Position(3, 0)
         assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move9, playerOne))
-        rulesOfThisGame.tryAndApplyMove(cleanBoard, move9, playerOne)
+        cleanGame.makeMove(move9)
 
-        assertTrue(rulesOfThisGame.isGameOver(board, playerTwo))
-        val winner = rulesOfThisGame.getWinner(cleanBoard)
-        assertEquals(1, winner.first)
+        assertTrue(cleanGame.isGameOver())
+        val winner = cleanGame.getWinner()
+        assertEquals(1, winner!!.first)
     }
 
     @Test
     fun `othello rules`() {
         rulesOfThisGame = rules.OthelloRules()
-        playerOne = Player( "Alice", 1200, 32, ColorOfPlayer.BLACK)
-        playerTwo = Player( "Bob", 1200, 32, ColorOfPlayer.WHITE)
-        val startPosition = listOf(Pair(Position(0, 0), 1))
-        val board = rulesOfThisGame.createStartBoard(4, startPosition)
-        val cleanGame = Game(rulesOfThisGame, board)
+        playerOne = Player("Alice")
+        playerTwo = Player("Bob")
+        playerOne.setColor(ColorOfPlayer.BLACK)
+        playerTwo.setColor(ColorOfPlayer.WHITE)
+        val startPosition = arrayOf(Pair(Position(0, 0), 1))
+        val cleanGame = Game(rulesOfThisGame, 8, startPosition)
         cleanGame.addPlayer(playerOne)
         cleanGame.addPlayer(playerTwo)
 
@@ -182,12 +189,11 @@ class SimpleGameIntegrationTest {
         )
 
         for (move in moves) {
-            assertTrue(rulesOfThisGame.isValidMove(cleanBoard, move, cleanGame.getCurrentPlayer()))
-            cleanGame.makeMove(move)
+            assertTrue(cleanGame.makeMove(move))
         }
 
         assertTrue(cleanGame.isGameOver())
         val winner = cleanGame.getWinner()
-        assertEquals(1, winner.first)
+        assertEquals(1, winner!!.first)
     }
 }
